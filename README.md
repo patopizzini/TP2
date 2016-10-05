@@ -20,22 +20,14 @@ El programa manipulará principalmente dos carpetas:
 El archivo *Eventos.txt* deberá contener un *bloque inicial de declaración de antenas* y luego un conjunto de *declaraciones de eventos*:
 
 * Bloque inicial de declaración de antenas: consta de un conjunto de líneas, cada una con el formato
-  `ANTENA id_antena max_conexiones`
-  
-  Donde `id_antena` identifica a la antena dentro del archivo y `max_conexiones` es la cantidad máxima de celulares conectados simultáneamente que permite.
+  `ANTENA id_antena max_conexiones`, donde `id_antena` identifica a la antena dentro del archivo y `max_conexiones` es la cantidad máxima de celulares conectados simultáneamente que permite.
   
 * Declaraciones de eventos: consta de un conjunto de líneas que representan eventos ocurridos, cada una con alguno de los siguientes formatos:
-  * `(CONECTAR | DESCONECTAR) n_celular id_antena minuto`
+  * `(CONECTAR | DESCONECTAR) n_celular id_antena minuto`: representa la conexión o desconexión del celular de número `n_celular` a la antena `id_antena` en el minuto `minuto`.
+ 
+  * `(INICIO | FIN) n_celular_1 n_celular_2 minuto`: representa el inicio o fin de una llamada entre el celular con número `n_celular_1` y el celular con número `n_celular_2` en el minuto `minuto`.
   
-  Representa la conexión o desconexión del celular de número `n_celular` a la antena `id_antena` en el minuto `minuto`.
-  
-  * `(INICIO | FIN) n_celular_1 n_celular_2 minuto`
-  
-  Representa el inicio o fin de una llamada entre el celular con número `n_celular_1` y el celular con número `n_celular_2` en el minuto `minuto`.
-  
-  * `MENSAJE n_celular_1 n_celular_2 minuto contenido`
-  
-  Representa el envío de un mensaje desde el celular con número `n_celular_1` hacia el celular con número `n_celular_2` en el minuto `minuto` con el contenido `contenido`.
+  * `MENSAJE n_celular_1 n_celular_2 minuto contenido`: representa el envío de un mensaje desde el celular con número `n_celular_1` hacia el celular con número `n_celular_2` en el minuto `minuto` con el contenido `contenido`.
 
 ### Consideraciones sobre el problema
 
