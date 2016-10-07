@@ -1,39 +1,43 @@
 # Trabajo Práctico 2
 ## Situación general
-Se quiere simular el funcionamiento (durante un día) de un sistema de telefonía.
+El programa a realizar cumple con la siguiente funcionalidad:
+1. Permite al usuario ver informes sobre el funcionamiento de un sistema de telefonía, que viene ya plasmado en un archivo de *registros históricos* (por ejemplo, permite ver cuál es el celular que más veces llamó, etc.).
+2. Plasma los mensajes de texto del registro histórico en los archivos de Ingresos y Egresos de cada celular.
+3. Permite al usuario agregar mensajes de texto al sistema, que se guardarán en los archivos de Egresos de los celulares.
+4. Procesa los archivos de Egresos y actualiza los registros históricos y los archivos de Ingresos de los celulares con los nuevos mensajes.
 
-El sistema cuenta con un conjunto de antenas interconectadas. Cada celular puede conectarse a una antena para usar los siguientes servicios:
-* Enviar un mensaje a otro celular conectado al sistema.
-* Llamar a otro celular conectado al sistema.
+El sistema cuenta con un conjunto de antenas interconectadas, cada una con una capacidad máxima de conexiones concurrentes. Cada celular se conecta a una antena para enviar mensajes o llamar a otro celular.
 
-Se simulará el funcionamiento mediante un programa que permite dos *modos de operación*:
-* Modo sistema: permite visualizar el registro de los mensajes, llamadas y conexiones a antenas que ocurrieron durante el día.
-* Modo celular: permite utilizar los servicios del sistema desde un celular.
+Una llamada puede dar *ocupado* si alguno de los celulares participantes no está conectado a ninguna antena, o bien alguna de las antenas a las que están conectados está saturada.
 
-El programa manipulará principalmente dos carpetas:
-* Celulares: contiene carpetas llamadas por número de celular, cada una con un archivo *Egresos.txt* que contiene los mensajes que el celular desea enviar, y otro, *Ingresos.txt* que contiene los mensajes que recibió.
-* Sistema: contiene un archivo llamado *Eventos.txt* con una *descripción de las antenas* y con los *registros históricos de eventos* del día. También contiene tres archivos de eventos de prueba llamados *EventosPrueba1.txt*, *EventosPrueba2.txt* y *EventosPrueba3.txt*.
+El programa permitirá dos modos de uso en la consola:
+* Modo sistema: para generar y visualizar informes sobre los registros históricos y procesar nuevos Egresos producidos desde el Modo Celular.
+* Modo celular: para ver los mensajes enviados y recibidos por un celular en el sistema, y enviar nuevos mensajes.
 
-### Formato de los archivos
+### Los registros históricos
 
-#### Eventos.txt:
-El archivo *Eventos.txt* deberá contener un *bloque inicial de declaración de antenas* y luego un conjunto de *declaraciones de eventos*:
+El archivo *Sistema/registros-historicos.txt* deberá contener un *bloque inicial de antenas* y luego un conjunto de *registros historicos*:
 
-* Bloque inicial de declaración de antenas: consta de un conjunto de líneas, cada una con el formato
-  `ANTENA id_antena max_conexiones`, donde `id_antena` identifica a la antena dentro del archivo y `max_conexiones` es la cantidad máxima de celulares conectados simultáneamente que permite.
+* Bloque inicial de antenas: consta de un conjunto de líneas, cada una con el formato `ANTENA nombreAntena maxConexiones`, donde `nombreAntena` nombra a la antena dentro del archivo y `maxConexiones` es la cantidad máxima de celulares conectados simultáneamente que permite.
   
 * Declaraciones de eventos: consta de un conjunto de líneas que representan eventos ocurridos, cada una con alguno de los siguientes formatos:
-  * `(CONECTAR | DESCONECTAR) n_celular id_antena minuto`: representa la conexión o desconexión del celular de número `n_celular` a la antena `id_antena` en el minuto `minuto`.
+  * `(CONECTAR | DESCONECTAR) numeroCelular nombreAntena minuto`: representa la conexión o desconexión del celular de número `numeroCelular` a la antena `nombreAntena` en el minuto `minuto`.
  
-  * `(INICIO | FIN) n_celular_1 n_celular_2 minuto`: representa el inicio o fin de una llamada entre el celular con número `n_celular_1` y el celular con número `n_celular_2` en el minuto `minuto`.
+  * `(INICIO | FIN) numeroCelularOrigen numeroCelularDestino minuto`: representa el inicio o fin de una llamada entre el celular con número `numeroCelularOrigen` y el celular con número `numeroCelularDestino` en el minuto `minuto`.
   
-  * `MENSAJE n_celular_1 n_celular_2 minuto contenido`: representa el envío de un mensaje desde el celular con número `n_celular_1` hacia el celular con número `n_celular_2` en el minuto `minuto` con el contenido `contenido`.
+  * `MENSAJE numeroCelularOrigen numeroCelularDestino minuto contenido`: representa el envío de un mensaje desde el celular con número `numeroCelularOrigen` hacia el celular con número `numeroCelularDestino` en el minuto `minuto` con el contenido `contenido`.
 
-### Consideraciones sobre el problema
+#### Consideraciones sobre los datos de entrada
 
-* Se considera que el archivo *Eventos.txt* tiene un formato válido y es coherente. Esto quiere decir:
-  * No se hace referencia a antenas no declaradas.
-  * Todo celular mencionado tiene una carpeta creada en el directorio Celulares.
-  * Un celular no está involucrado en llamadas simultáneas.
-  * Todo inicio de llamada se corresponde con un fin de llamada *posterior* y toda conexión a una antena con una desconexión *posterior*.
-* Si un celular intenta enviar un mensaje y la antena a la que está conectado éste o el destinatario están totalmente ocupadas, el mensaje se mantendrá en espera a ser enviado hasta que se desocupen ambas.
+* Se considera que el archivo *registros-historicos.txt* tiene un formato válido y es coherente.
+* Si al leer los registros históricos se inicia una llamada que dió ocupado, se ignora el final de dicha llamada.
+
+### Los informes del Modo Sistema
+
+Para cumplir con los informes que muestra el menú del Modo Sistema, el programa deberá registrar las siguientes cosas:
+* Llamadas realizadas: celular origen, celular destino, horario de inicio, antenas involucradas. Para las que no dieron ocupado: horario de fin. Para las que dieron ocupado: razón por la cual dieron ocupado (antena o celular desconectado). Items a...j.
+* Mensajes enviados: celular origen, celular destino, horario de envío, contenido. Item b.
+* Antenas: nombre, capacidad, máxima capacidad utilizada. Items k, n.
+* Celulares: numero, identificador, antena de última conexión. Item o.
+
+La manera de registrar algunas cosas es simplemente cargándolas en memoria a medida que se leen (inicios/fines de llamada, datos de antenas, mensajes). Algunas otras cosas, como por ejemplo detectar si una llamada debería dar ocupado, requieren analizar el estado del sistema en el momento en el que ocurre el evento. Para conseguir esto, el sistema debería poder *simular* los eventos ocurridos como si fuesen en tiempo real, recibiendo cada registro histórico como si fuera un evento que está ocurriendo.
