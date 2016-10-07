@@ -1,6 +1,7 @@
 # Trabajo Práctico 2
 ## Situación general
 El programa a realizar cumple con la siguiente funcionalidad:
+
 1. Permite al usuario ver informes sobre el funcionamiento de un sistema de telefonía, que viene ya plasmado en un archivo de *registros históricos* (por ejemplo, permite ver cuál es el celular que más veces llamó, etc.).
 2. Plasma los mensajes de texto del registro histórico en los archivos de Ingresos y Egresos de cada celular.
 3. Permite al usuario agregar mensajes de texto al sistema, que se guardarán en los archivos de Egresos de los celulares.
