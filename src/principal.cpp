@@ -6,10 +6,10 @@ using namespace std;
 
 int main(){
 
-	Interfaz programaPrincipal;
+	Interfaz programa;
 
-	programaPrincipal.mostrarMenuPrincipal();
-	programaPrincipal.derivarAlModo(programaPrincipal.preguntarModo());
+	programa.mostrarMenuPrincipal();
+	programa.derivarAlModo(programa.preguntarModo());
 
 	return 0;
 }
