@@ -1,5 +1,7 @@
 #include <iostream>
 #include "interfaz.h"
+#include "consolaModoSistema.h"
+#include "consolaModoCelular.h"
 
 using namespace std;
 
@@ -22,4 +24,14 @@ unsigned int Interfaz::preguntarModo() {
 	return modo;
 }
 
+void Interfaz::derivarAlModo(unsigned int modo) {
 
+	switch (this->preguntarModo()) {
+		case 1 :
+			consolaModoSistema.mostrarMenu();
+			break;
+		case 2 :
+			consolaModoCelular.mostrarMenu();
+			break;
+	}
+}
