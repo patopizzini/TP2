@@ -6,13 +6,14 @@ using namespace std;
 
 int main(){
 
-	unsigned int modo = accederAlMenu();
-	switch (modo) {
+	Interfaz programaPrincipal;
+	programaPrincipal.mostrarMenuPrincipal();
+	switch (programaPrincipal.preguntarModo()) {
 		case 1 :
-			cout << "modo sistema"; //TEMPORAL
+			consolaModoSistema.mostrarMenu();
 			break;
 		case 2 :
-			cout << "modo celular"; //TEMPORAL
+			consolaModoCelular.mostrarMenu();
 			break;
 	}
 
