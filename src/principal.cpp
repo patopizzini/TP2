@@ -9,7 +9,7 @@ int main(){
 	Interfaz programa;
 
 	programa.mostrarMenuPrincipal();
-	programa.derivarAlModo(programa.preguntarModo());
+	programa.derivarAlModo();
 
 	return 0;
 }

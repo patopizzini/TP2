@@ -26,7 +26,7 @@ public:
 	 * post: Muestra el menú del modo seleccionado
 	 * 			1- Menú del modo sistema; 2- Menú del modo celular
 	 */
-	void derivarAlModo(unsigned int modo);
+	void derivarAlModo();
 
 };
 

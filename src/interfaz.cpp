@@ -24,7 +24,7 @@ unsigned int Interfaz::preguntarModo() {
 	return modo;
 }
 
-void Interfaz::derivarAlModo(unsigned int modo) {
+void Interfaz::derivarAlModo() {
 
 	switch (this->preguntarModo()) {
 		case 1 :
