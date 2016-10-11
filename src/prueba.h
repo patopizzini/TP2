@@ -1,3 +1,7 @@
 //Prueba.
 
 #include ...
+
+class Nombre {
+  
+};
